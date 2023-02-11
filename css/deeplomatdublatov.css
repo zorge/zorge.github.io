@@ -27,3 +27,11 @@
   color: #fff;
   cursor: hand;
 }
+
+.dody{ 
+  background: url(../dreamdome-album/cover_cropped.jpg) no-repeat top center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+ }

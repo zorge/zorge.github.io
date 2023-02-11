@@ -14,10 +14,8 @@
 
   <!-- Facebook Pixel Code -->
   <script>
-    !function (f, b, e, v, n, t, s)
-    {
-      if (f.fbq) return; n = f.fbq = function ()
-      {
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
         n.callMethod ?
           n.callMethod.apply(n, arguments) : n.queue.push(arguments)
       };
@@ -60,15 +58,12 @@
   <script>
 
     // Pause and play the video, and change the button text
-    function myFunction() 
-    {
-      if (myVideo.paused) 
-      {
+    function myFunction() {
+      if (myVideo.paused) {
         myVideo.play();
         myBtn.innerHTML = "Pause";
       }
-      else 
-      {
+      else {
         myVideo.pause();
         myBtn.innerHTML = "Play";
       }
@@ -91,6 +86,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="dreamdome-album/index.html">Album</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#bio">Story</a>
           </li>

@@ -50,6 +50,10 @@
   <!-- Custom fonts for this template -->
   <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+
+  <!-- Jquery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <!-- Custom styles for this template -->
   <link href="../css/grayscale.css" rel="stylesheet">
 
@@ -60,6 +64,14 @@
 <body id="page-top">
 
   <div class="dody" style="height: 100vh;">
+    <div class="gdpr-banner" style="display:none" id="gdpr-banner-banner">
+      <div class="small">We use cookies to offer a better browsing experience, analyze site traffic and personalize
+        content. Please
+        review our <a href="/privacy-policy">privacy policy page</a>. By clicking accept or by continuing using our
+        site,
+        you consent to our privacy policy & use of cookies.</div>
+      <button class="btn btn-secondary mt-3 mb=2" onclick="acceptGdpr()">Accept</button>
+    </div>
     <div class="fixed-bottom text-center">
 
       <div class="container">
@@ -67,34 +79,60 @@
         <div class="row">
           <div class="col-lg-12 mx-auto pb-5">
             <div class="dody-inner text-center pb-4 pt-5">
-              <h1 class="mb-0 pb-0">MUSIC MUSIC MUSIC</h1>
-              <h1 class="mb-0 pb-0"><i>HERE HERE HERE</i></h1>
-              <h1>SOON SOON SOON</h1>
-              <br>
-              Bonus download link is around the corner.
-              <ul class="list-inline pt-3">
-                <li class="list-inline-item mx-0 px-1">
-                  <a href="https://deeplomatdublatov.bandcamp.com/" class="btn btn-default btn-sm">
-                    <i class="fa fa-bandcamp fa-fw"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item mx-0 px-1">
-                  <a href="https://dreamdomerecords.com/" class="btn btn-default btn-sm">
-                    <i class="fa fa-globe fa-fw"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item mx-0 px-1">
-                  <a href="https://open.spotify.com/artist/3tOusnlJjQ9FFvziyWioHu" class="btn btn-default btn-sm">
-                    <i class="fa fa-spotify fa-fw"></i>
-                  </a>
-                </li>
-              </ul>
+              <h1 class="mb-0 pb-4">MUSIC <i>IS</i> HERE</h1>
+              <div class="pt-0 pb-4" id="emailFormDiv">
+                <div class="pb-4">
+                  Please subscribe to our news to download the full digital album. We promise not to spam you and to
+                  keep it to ourselves.
+                </div>
+                <form class="form" id="emailForm">
+                  <div class="row">
+                    <div class="form-group col-md-4 col-sm-12 mb-3">
+                      <label for="youremail" class="sr-only">Email</label>
+                      <input type="text" class="form-control" id="youremail" name="youremail" placeholder="Your Email">
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12 mb-3 px-md-0">
+                      <label for="yourname" class="sr-only">Name</label>
+                      <input type="text" class="form-control" id="yourname" placeholder="Your Name">
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                      <button type="submit" class="btn btn-block btn-success mb-3"">Get The
+                        Download Link!</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              
+              <div class=" py-4" id="downloadDiv" style="display:none">
+                        <h5>Thanks! Download your copy of the extended version of our album <a
+                            href="https://deeplomatdublatov.s3.eu-central-1.amazonaws.com/Deeplomat%26Dublatov+-+Dream+Dome+2023.zip">here</a>.
+                          Enjoy!
+                        </h5>
+                    </div>
+
+                    <ul class=" list-inline pt-3">
+                      <li class="list-inline-item mx-0 px-1">
+                        <a href="https://deeplomatdublatov.bandcamp.com/" class="btn btn-default btn-sm">
+                          <i class="fa fa-bandcamp fa-fw"></i>
+                        </a>
+                      </li>
+                      <li class="list-inline-item mx-0 px-1">
+                        <a href="https://dreamdomerecords.com/" class="btn btn-default btn-sm">
+                          <i class="fa fa-globe fa-fw"></i>
+                        </a>
+                      </li>
+                      <li class="list-inline-item mx-0 px-1">
+                        <a href="https://open.spotify.com/artist/3tOusnlJjQ9FFvziyWioHu" class="btn btn-default btn-sm">
+                          <i class="fa fa-spotify fa-fw"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
 
@@ -107,6 +145,66 @@
 
   <!-- Custom scripts for this template -->
   <script src="../js/grayscale.min.js"></script>
+
+
+  <script>
+
+    function acceptGdpr() {
+      // set a cookie to indicate that the user has accepted the terms
+      document.cookie = 'gdpr_accepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+      // hide the banner
+      $('#gdpr-banner-banner').hide();
+    }
+
+    // check for the presence of the gdpr_accepted cookie
+    if (document.cookie.indexOf('gdpr_accepted=true') === -1) {
+      // hide the banner
+      $('#gdpr-banner-banner').show();
+    }
+
+    $("#emailForm").submit(function (event) {
+      event.preventDefault();
+
+      if (!isEmail($("#youremail").val())) {
+        alert("Please enter a vaiid email.");
+        return;
+      }
+
+      if (!isName($("#yourname").val())) {
+        alert("Please enter a valid name");
+        return;
+      }
+
+      var postData = { name: $("#yourname").val(), email: $("#youremail").val() }
+
+      $.ajax({
+        url: "https://deeplomatdublatovfunctions.azurewebsites.net/api/CollectEmail?code=IhGATgOEd_luyJ8YY-NKsbEzoQH8KMLSUlmrs8sbgFlYAzFudoKuFg==",
+        type: "post",
+        data: JSON.stringify(postData),
+        contentType: "application/json; charset=utf-8",
+        crossDomain: true,
+        dataType: "json",
+        success: function (data, status) {
+          //alert("Data: " + data + "\nStatus: " + status);
+          $('#emailFormDiv').hide();
+          $('#downloadDiv').show();
+        }
+      }).fail(function (error) {
+        alert('Error: ' + error.responseText);
+      });
+    });
+
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+
+    function isName(name) {
+      var regex = /^([a-zA-Z.,'-\s]{2,50})+$/;
+      return regex.test(name);
+    }
+
+  </script>
 
 </body>
 

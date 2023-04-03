@@ -80,7 +80,7 @@
           <div class="col-lg-12 mx-auto pb-5">
             <div class="dody-inner text-center pb-4 pt-5">
               <h1 class="mb-0 pb-4">MUSIC <i>IS</i> HERE</h1>
-              <div class="pt-0 pb-4" id="emailFormDiv">
+              <div class="pt-0 pb-4" id="emailFormDiv" style="display:none">
                 <div class="pb-4">
                   Please subscribe to our news to download the full digital album. We promise not to spam you and to
                   keep it to ourselves.
@@ -103,30 +103,38 @@
                 </form>
               </div>
               
-              <div class=" py-4" id="downloadDiv" style="display:none">
+              <div class=" py-4" id="downloadDiv" style="display:block">
                         <h5>Thanks! Download your copy of the extended version of our album <a
-                            href="https://deeplomatdublatov.s3.eu-central-1.amazonaws.com/Deeplomat%26Dublatov+-+Dream+Dome+2023.zip">here</a>.
+                            href="https://deeplomatdublatov.s3.eu-central-1.amazonaws.com/Deeplomat%26Dublatov+-+Dream+Dome+2023.zip">here</a>
+                          or copy
+                          <a href="javascript:void(0);" class="btn px-0" onclick="copyToClipboard()"
+                            data-toggle="tooltip" data-placement="top" title="Copy album link." id="copyButton">
+                            <i class="fa fa-clipboard text-info"></i>
+                          </a>
+                          the link to download on another device.
+                          <br>
                           Enjoy!
                         </h5>
-                    </div>
 
-                    <ul class=" list-inline pt-3">
-                      <li class="list-inline-item mx-0 px-1">
-                        <a href="https://deeplomatdublatov.bandcamp.com/" class="btn btn-default btn-sm">
-                          <i class="fa fa-bandcamp fa-fw"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item mx-0 px-1">
-                        <a href="https://dreamdomerecords.com/" class="btn btn-default btn-sm">
-                          <i class="fa fa-globe fa-fw"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item mx-0 px-1">
-                        <a href="https://open.spotify.com/artist/3tOusnlJjQ9FFvziyWioHu" class="btn btn-default btn-sm">
-                          <i class="fa fa-spotify fa-fw"></i>
-                        </a>
-                      </li>
-                    </ul>
+                        <ul class=" list-inline pt-3">
+                          <li class="list-inline-item mx-0 px-1">
+                            <a href="https://deeplomatdublatov.bandcamp.com/" class="btn btn-default btn-sm">
+                              <i class="fa fa-bandcamp fa-fw"></i>
+                            </a>
+                          </li>
+                          <li class="list-inline-item mx-0 px-1">
+                            <a href="https://dreamdomerecords.com/" class="btn btn-default btn-sm">
+                              <i class="fa fa-globe fa-fw"></i>
+                            </a>
+                          </li>
+                          <li class="list-inline-item mx-0 px-1">
+                            <a href="https://open.spotify.com/artist/3tOusnlJjQ9FFvziyWioHu"
+                              class="btn btn-default btn-sm">
+                              <i class="fa fa-spotify fa-fw"></i>
+                            </a>
+                          </li>
+                        </ul>
+                    </div>
                   </div>
               </div>
             </div>
@@ -134,77 +142,85 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Plugin JavaScript -->
-  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Custom scripts for this template -->
-  <script src="../js/grayscale.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="../js/grayscale.min.js"></script>
 
 
-  <script>
+    <script>
 
-    function acceptGdpr() {
-      // set a cookie to indicate that the user has accepted the terms
-      document.cookie = 'gdpr_accepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT';
-      // hide the banner
-      $('#gdpr-banner-banner').hide();
-    }
-
-    // check for the presence of the gdpr_accepted cookie
-    if (document.cookie.indexOf('gdpr_accepted=true') === -1) {
-      // hide the banner
-      $('#gdpr-banner-banner').show();
-    }
-
-    $("#emailForm").submit(function (event) {
-      event.preventDefault();
-
-      if (!isEmail($("#youremail").val())) {
-        alert("Please enter a vaiid email.");
-        return;
+      function acceptGdpr() {
+        // set a cookie to indicate that the user has accepted the terms
+        document.cookie = 'gdpr_accepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+        // hide the banner
+        $('#gdpr-banner-banner').hide();
       }
 
-      if (!isName($("#yourname").val())) {
-        alert("Please enter a valid name");
-        return;
+      // check for the presence of the gdpr_accepted cookie
+      if (document.cookie.indexOf('gdpr_accepted=true') === -1) {
+        // hide the banner
+        $('#gdpr-banner-banner').show();
       }
 
-      var postData = { name: $("#yourname").val(), email: $("#youremail").val() }
+      $("#emailForm").submit(function (event) {
+        event.preventDefault();
 
-      $.ajax({
-        url: "https://deeplomatdublatovfunctions.azurewebsites.net/api/CollectEmail?code=IhGATgOEd_luyJ8YY-NKsbEzoQH8KMLSUlmrs8sbgFlYAzFudoKuFg==",
-        type: "post",
-        data: JSON.stringify(postData),
-        contentType: "application/json; charset=utf-8",
-        crossDomain: true,
-        dataType: "json",
-        success: function (data, status) {
-          //alert("Data: " + data + "\nStatus: " + status);
-          $('#emailFormDiv').hide();
-          $('#downloadDiv').show();
+        if (!isEmail($("#youremail").val())) {
+          alert("Please enter a vaiid email.");
+          return;
         }
-      }).fail(function (error) {
-        alert('Error: ' + error.responseText);
+
+        if (!isName($("#yourname").val())) {
+          alert("Please enter a valid name");
+          return;
+        }
+
+        var postData = { name: $("#yourname").val(), email: $("#youremail").val() }
+
+        $.ajax({
+          url: "https://deeplomatdublatovfunctions.azurewebsites.net/api/CollectEmail?code=IhGATgOEd_luyJ8YY-NKsbEzoQH8KMLSUlmrs8sbgFlYAzFudoKuFg==",
+          type: "post",
+          data: JSON.stringify(postData),
+          contentType: "application/json; charset=utf-8",
+          crossDomain: true,
+          dataType: "json",
+          success: function (data, status) {
+            //alert("Data: " + data + "\nStatus: " + status);
+            $('#emailFormDiv').hide();
+            $('#downloadDiv').show();
+          }
+        }).fail(function (error) {
+          alert('Error: ' + error.responseText);
+        });
       });
-    });
 
-    function isEmail(email) {
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      return regex.test(email);
-    }
+      function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+      }
 
-    function isName(name) {
-      var regex = /^([a-zA-Z.,'-\s]{2,50})+$/;
-      return regex.test(name);
-    }
+      function isName(name) {
+        var regex = /^([a-zA-Z.,'-\s]{2,50})+$/;
+        return regex.test(name);
+      }
 
-  </script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+
+      function copyToClipboard() {
+        navigator.clipboard.writeText("https://deeplomatdublatov.s3.eu-central-1.amazonaws.com/Deeplomat%26Dublatov+-+Dream+Dome+2023.zip");
+        $('#copyButton').attr('data-original-title', "Link copied!").tooltip('show');
+      }
+
+    </script>
 
 </body>
 
